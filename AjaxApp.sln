@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxApp.Api", "AjaxApp.Api\AjaxApp.Api.csproj", "{E0E20DCB-8B3D-48A7-9422-D2D47631BC6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxApp.Web", "AjaxApp.Web\AjaxApp.Web.csproj", "{26D77138-96A9-4945-B15B-12A62985432F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxApp.Service", "AjaxApp.Service\AjaxApp.Service.csproj", "{0240F2A4-E214-4653-B55C-D9C15543364C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxApp.DataAccess", "AjaxApp.DataAccess\AjaxApp.DataAccess.csproj", "{8DABDD78-3492-4DB5-A215-4DB01DE32281}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0E20DCB-8B3D-48A7-9422-D2D47631BC6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E20DCB-8B3D-48A7-9422-D2D47631BC6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E20DCB-8B3D-48A7-9422-D2D47631BC6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E20DCB-8B3D-48A7-9422-D2D47631BC6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D77138-96A9-4945-B15B-12A62985432F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D77138-96A9-4945-B15B-12A62985432F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D77138-96A9-4945-B15B-12A62985432F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D77138-96A9-4945-B15B-12A62985432F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0240F2A4-E214-4653-B55C-D9C15543364C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0240F2A4-E214-4653-B55C-D9C15543364C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0240F2A4-E214-4653-B55C-D9C15543364C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0240F2A4-E214-4653-B55C-D9C15543364C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DABDD78-3492-4DB5-A215-4DB01DE32281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DABDD78-3492-4DB5-A215-4DB01DE32281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DABDD78-3492-4DB5-A215-4DB01DE32281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DABDD78-3492-4DB5-A215-4DB01DE32281}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

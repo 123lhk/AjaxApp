@@ -1,0 +1,18 @@
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
+/AjaxApp.Api/App_Data/aspnet-AjaxApp.Api.mdf
+/AjaxApp.Api/App_Data/aspnet-AjaxApp.Api_log.ldf
+/AjaxApp.Api/bin
+/AjaxApp.Web/bin
+/AjaxApp.Api/obj
+/AjaxApp.Service/bin
+/AjaxApp.Service/obj
+/AjaxApp.Web/obj
+/AjaxApp.DataAccess/obj
+/AjaxApp.DataAccess/bin
