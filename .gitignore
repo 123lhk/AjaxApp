@@ -16,3 +16,11 @@
 /AjaxApp.Web/obj
 /AjaxApp.DataAccess/obj
 /AjaxApp.DataAccess/bin
+/AjaxApp.Web/.bowerrc
+/AjaxApp.Web/components
+/AjaxApp.Web/node_modules
+/AjaxApp.Web/lib
+/AjaxApp.Web/package.json
+/AjaxApp.Web/gruntfile.js
+/AjaxApp.Web/bower.json
+/.npmignore
