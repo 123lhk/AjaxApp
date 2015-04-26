@@ -25,9 +25,6 @@ namespace AjaxApp.Api
 
 			container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 
-			//Important!!Create a owin middleware to make non-api request work
-			app.UseOwinContextInjector(container);
-
 			container.Verify();
 
 			GlobalConfiguration.Configuration.DependencyResolver =
@@ -36,18 +33,5 @@ namespace AjaxApp.Api
 		}
 	}
 
-	internal static class AppBUilderExtension
-	{
-		public static void UseOwinContextInjector(this IAppBuilder app, Container container)
-		{
-			// Create an OWIN middleware to create an execution context scope
-			app.Use(async (context, next) =>
-			{
-				using (var scope = container.BeginExecutionContextScope())
-				{
-					await next.Invoke();
-				}
-			});
-		}
-	}
+	
 }

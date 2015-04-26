@@ -20,7 +20,4 @@
 /AjaxApp.Web/components
 /AjaxApp.Web/node_modules
 /AjaxApp.Web/lib
-/AjaxApp.Web/package.json
-/AjaxApp.Web/gruntfile.js
-/AjaxApp.Web/bower.json
 /.npmignore

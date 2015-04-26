@@ -90,9 +90,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.js" />
+    <Content Include="app\controllers\navController.js" />
+    <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\services\authenticationService.js" />
+    <Content Include="app\services\utilityService.js" />
+    <Content Include="app\views\login.html" />
     <Content Include="css\angular-loading-bar\loading-bar.css" />
     <Content Include="css\angular-loading-bar\loading-bar.min.css" />
-    <Content Include="css\bootstrap\bootstrap-theme.min.css" />
     <Content Include="css\bootswatch\bootstrap.css" />
     <Content Include="css\bootswatch\bootstrap.min.css" />
     <Content Include="css\bootswatch\thumbnail.png" />
@@ -107,6 +112,8 @@
     <Content Include="js\angular-bootstrap\ui-bootstrap.min.js" />
     <Content Include="js\angular-loading-bar\loading-bar.js" />
     <Content Include="js\angular-loading-bar\loading-bar.min.js" />
+    <Content Include="js\angular-local-storage\angular-local-storage.js" />
+    <Content Include="js\angular-local-storage\angular-local-storage.min.js" />
     <Content Include="js\angular-route\angular-route.js" />
     <Content Include="js\angular-route\angular-route.min.js" />
     <Content Include="js\angular\angular-csp.css" />
@@ -114,7 +121,7 @@
     <Content Include="js\angular\angular.min.js" />
     <Content Include="js\jquery\jquery.js" />
     <Content Include="js\jquery\jquery.min.js" />
-    <Content Include="app\views\index.html" />
+    <Content Include="app\index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +135,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include=".bowerrc" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
     <Content Include="css\bootswatch\bootswatch.less" />
@@ -165,10 +171,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\controllers\" />
-    <Folder Include="app\services\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

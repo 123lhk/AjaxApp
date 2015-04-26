@@ -7,6 +7,7 @@ using AjaxApp.Service.UserManagement.Interfaces;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using SimpleInjector;
+using SimpleInjector.Extensions.ExecutionContextScoping;
 
 namespace AjaxApp.Api.Providers
 {
@@ -15,21 +16,6 @@ namespace AjaxApp.Api.Providers
         private readonly string _publicClientId;
 
 		public static Container Container { get; set; }
-	    private IUserManagementService _userManagementService = null;
-
-	    public IUserManagementService UserManagementService
-	    {
-		    get
-		    {
-			    if (_userManagementService == null)
-			    {
-				    _userManagementService = Container.GetInstance<IUserManagementService>();
-			    }
-
-			    return _userManagementService;
-		    }
-	    }
-
 
         public ApplicationOAuthProvider(string publicClientId)
         {
@@ -44,7 +30,12 @@ namespace AjaxApp.Api.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-	        await UserManagementService.GrantResourceOwnerCredentials(context);
+	        using (Container.BeginExecutionContextScope())
+	        {
+		        var userManagementService = Container.GetInstance<IUserManagementService>();
+				await userManagementService.GrantResourceOwnerCredentials(context);
+	        }
+	       
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -91,5 +82,21 @@ namespace AjaxApp.Api.Providers
             };
             return new AuthenticationProperties(data);
         }
-    }
+
+		//public override Task MatchEndpoint(OAuthMatchEndpointContext context)
+		//{
+		//	if (context.OwinContext.Request.Method == "OPTION" && context.IsTokenEndpoint)
+		//	{
+		//		context.OwinContext.Response.Headers.Add("Access-Control-Allow-Methods", new[] { "POST" });
+		//		context.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "accept", "authorization", "content-type" });
+		//		context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+		//		context.OwinContext.Response.StatusCode = 200;
+		//		context.RequestCompleted();
+
+		//		return Task.FromResult<object>(null);
+		//	}
+
+		//	return base.MatchEndpoint(context);
+		//}
+	}
 }
