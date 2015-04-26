@@ -91,11 +91,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\navController.js" />
     <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\productController.js" />
     <Content Include="app\services\authenticationService.js" />
+    <Content Include="app\services\productService.js" />
+    <Content Include="app\services\requestInterceptor.js" />
     <Content Include="app\services\utilityService.js" />
+    <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
+    <Content Include="app\views\products.html" />
     <Content Include="css\angular-loading-bar\loading-bar.css" />
     <Content Include="css\angular-loading-bar\loading-bar.min.css" />
     <Content Include="css\bootswatch\bootstrap.css" />
@@ -121,7 +127,7 @@
     <Content Include="js\angular\angular.min.js" />
     <Content Include="js\jquery\jquery.js" />
     <Content Include="js\jquery\jquery.min.js" />
-    <Content Include="app\index.html" />
+    <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

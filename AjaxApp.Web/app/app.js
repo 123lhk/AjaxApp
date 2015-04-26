@@ -2,11 +2,19 @@
 
 app.config(function ($routeProvider, $locationProvider) {
 
-	
+	$routeProvider.when("/product", {
+		controller: 'productController',
+		templateUrl: "/app/views/products.html"
+	});
 
 	$routeProvider.when("/login", {
 		controller: 'loginController',
 		templateUrl: "/app/views/login.html"
+	});
+
+	$routeProvider.when("/home", {
+		controller: 'loginController',
+		templateUrl: "/app/views/home.html"
 	});
 
 	
@@ -18,4 +26,8 @@ app.config(function ($routeProvider, $locationProvider) {
 //change this
 app.constant('serviceSetting', {
 	apiServiceBaseUri: 'http://localhost:59400'
+});
+
+app.config(function ($httpProvider) {
+	$httpProvider.interceptors.push('requestInterceptor');
 });

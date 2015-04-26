@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace AjaxApp.Api.Controllers
 {
@@ -19,7 +20,7 @@ namespace AjaxApp.Api.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            return "You are authorised!";
         }
 
         // POST api/values

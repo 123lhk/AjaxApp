@@ -4,15 +4,7 @@ module.exports = function (grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		uglify: {
-			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-			},
-			build: {
-				src: 'src/<%= pkg.name %>.js',
-				dest: 'build/<%= pkg.name %>.min.js'
-			}
-		},
+		
 		bower: {
 			install: {
 			}
@@ -57,7 +49,8 @@ module.exports = function (grunt) {
 					
 				}
 			}
-		}
+		},
+
 
 	});
 
@@ -69,6 +62,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	// Default task(s).
 	//grunt.registerTask('default', ['uglify']);
 
