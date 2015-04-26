@@ -1,6 +1,11 @@
 ﻿app.service('authenticationService', ['$http', '$q', 'localStorageService','serviceSetting', function ($http, $q, localStorageService, serviceSetting) {
 	var serviceBase = serviceSetting.apiServiceBaseUri;
 
+	var authenticationStatus = {
+		isAuth: false,
+		userName: ''
+	}
+
 	this.login = function (loginDetail) {
 
 		var deferred = $q.defer();
@@ -13,6 +18,8 @@
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 		}).success(function(response) {
 			localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
+			authenticationStatus.isAuth = true;
+			authenticationStatus.userName = response.userName;
 			deferred.resolve(response.data);
 
 		}).error(function (response) {
@@ -26,5 +33,25 @@
 
 		return deferred.promise;
 	}
+
+	this.logOut = function () {
+
+		localStorageService.remove('authorizationData');
+
+		authenticationStatus.isAuth = false;
+		authenticationStatus.userName = "";
+	};
+
+	this.getAuthData = function() {
+		var authData = localStorageService.get('authorizationData');
+		if (authData) {
+			authenticationStatus.isAuth = true;
+			authenticationStatus.userName = authData.userName;
+		}
+
+		return authenticationStatus;
+	}
+
+
 
 }]);

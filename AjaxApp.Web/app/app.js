@@ -31,3 +31,7 @@ app.constant('serviceSetting', {
 app.config(function ($httpProvider) {
 	$httpProvider.interceptors.push('requestInterceptor');
 });
+
+app.run(['authenticationService', function (authenticationService) {
+	authenticationService.getAuthData();
+}]);

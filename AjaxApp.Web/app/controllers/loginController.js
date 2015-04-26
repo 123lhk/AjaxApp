@@ -1,4 +1,4 @@
-﻿app.controller('loginController', ['$scope', 'authenticationService', function ($scope, authenticationService) {
+﻿app.controller('loginController', ['$scope', 'authenticationService', '$location', function ($scope, authenticationService, $location) {
 
 	$scope.loginDetail = {};
 	$scope.text = 'aaaaaa';
@@ -11,7 +11,7 @@
 
 		result.then(
 			function(date) {
-				alert('logined in!');
+				$location.path('/product');
 			},
 			function(errorMessage) {
 				alert(errorMessage);

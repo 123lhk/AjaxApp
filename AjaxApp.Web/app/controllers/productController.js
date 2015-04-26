@@ -1,7 +1,7 @@
 ﻿app.controller('productController', ['$scope', '$location', 'productService', function ($scope, $location, productService) {
 
 	$scope.product = '';
-	productService.GetProduct().then(
+	productService.getProduct().then(
 		function(response) {
 			$scope.product = response;
 		},

@@ -1,7 +1,7 @@
 ﻿app.service('productService', ['$http', '$q',  'serviceSetting', function ($http, $q, serviceSetting) {
 	var serviceBase = serviceSetting.apiServiceBaseUri;
 
-	this.GetProduct = function() {
+	this.getProduct = function() {
 
 		var deferred = $q.defer();
 		$http({
