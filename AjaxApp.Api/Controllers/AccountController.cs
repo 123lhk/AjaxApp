@@ -266,7 +266,7 @@ namespace AjaxApp.Api.Controllers
                 {
                     foreach (string error in result.Errors)
                     {
-                        ModelState.AddModelError("", error);
+                        ModelState.AddModelError("ServiceError", error);
                     }
                 }
 

@@ -50,8 +50,36 @@
 		}
 
 		return authenticationStatus;
-	}
+	};
 
+
+	this.signup = function(signupDetail) {
+		var deferred = $q.defer();
+		var requestData = {
+			'Email' : signupDetail.email,
+			'Password' : signupDetail.password,
+			'ConfirmPassword' : signupDetail.confirmPassword
+		};
+
+		$http({
+			method: 'POST',
+			url: serviceBase + '/api/account/register',
+			data: requestData
+		}).success(function (response) {
+			
+			deferred.resolve("User registered!");
+
+		}).error(function (response) {
+			if (!angular.isObject(response) || !response.ModelState) {
+				deferred.reject("Login Failed!");
+			} else {
+				deferred.reject(response.ModelState);
+			}
+
+		});
+
+		return deferred.promise;
+	}
 
 
 }]);

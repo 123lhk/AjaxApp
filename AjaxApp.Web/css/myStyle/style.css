@@ -1,0 +1,19 @@
+﻿.myView.ng-enter {
+	 animation:rollIn 0.75s ease;
+	 -webkit-animation: rollIn 0.75s ease;
+}
+
+.myView.ng-leave {
+	 /*animation:rotateOut 0.5s  ease-out;
+	 -webkit-animation: rotateIn 0.5s ease-out;*/
+}
+
+.alert.ng-enter {
+	 animation:fadeInDown 0.75s ease;
+	 -webkit-animation: fadeInDown 0.75s ease;
+}
+
+.alert.ng-leave {
+	 animation:fadeOutUp 0.75s ease;
+	 -webkit-animation: fadeOutUp 0.75s ease;
+}

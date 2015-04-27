@@ -37,7 +37,9 @@ module.exports = function (grunt) {
 				files: {
 					'bootswatch': 'bootswatch/flatly',
 					'angular-loading-bar/loading-bar.min.css': 'angular-loading-bar/build/loading-bar.min.css',
-					'angular-loading-bar/loading-bar.css': 'angular-loading-bar/build/loading-bar.css'
+					'angular-loading-bar/loading-bar.css': 'angular-loading-bar/build/loading-bar.css',
+					'animate.css/animate.css': 'animate.css/animate.css',
+					'animate.css/animate.min.css': 'animate.css/animate.min.css'
 				}
 			},
 			fonts: {

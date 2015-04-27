@@ -92,6 +92,7 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controllers\homeController.js" />
+    <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\navController.js" />
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\productController.js" />
@@ -102,11 +103,15 @@
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\products.html" />
+    <Content Include="app\views\signup.html" />
     <Content Include="css\angular-loading-bar\loading-bar.css" />
     <Content Include="css\angular-loading-bar\loading-bar.min.css" />
+    <Content Include="css\animate.css\animate.css" />
+    <Content Include="css\animate.css\animate.min.css" />
     <Content Include="css\bootswatch\bootstrap.css" />
     <Content Include="css\bootswatch\bootstrap.min.css" />
     <Content Include="css\bootswatch\thumbnail.png" />
+    <Content Include="css\myStyle\style.css" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="gruntfile.js" />

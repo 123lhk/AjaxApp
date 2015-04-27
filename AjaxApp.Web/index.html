@@ -5,6 +5,8 @@
 	<title>Angular App</title>
 	<link href="/css/bootswatch/bootstrap.min.css" rel="stylesheet" />
 	<link href="/css/angular-loading-bar/loading-bar.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css/animate.min.css" rel="stylesheet"/>
+	<link href="/css/myStyle/style.css" rel="stylesheet"/>
 	
 </head>
 	<body ng-app="ajaxApp">
@@ -25,7 +27,7 @@
 						<li><a href="#Contact">Contact</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li data-ng-hide="!authData.isAuth"><a href="#">Hi, {{authData.userName}}</a></li>
+						<li data-ng-hide="!authData.isAuth"><a href="#/home">Hi, {{authData.userName}}</a></li>
 						<li data-ng-hide="!authData.isAuth"><a href="#/product">Products</a></li>
 						<li data-ng-hide="!authData.isAuth"><a href="" ng-click="logOutClick()">Logout</a></li>
 						<li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
@@ -36,7 +38,7 @@
 		</nav>
 
 		<div class="container">
-			<div ng-view>
+			<div class="myView" ng-view>
 			</div>
 		</div>
 
@@ -55,10 +57,12 @@
 		<script src="/app/services/requestInterceptor.js"></script>
 		<script src="/app/services/authenticationService.js"></script>
 		<script src="/app/services/productService.js"></script>
+		<script src="/app/services/utilityService.js"></script>
 		<script src="/app/controllers/navController.js"></script>
 		<script src="/app/controllers/loginController.js"></script>
 		<script src="/app/controllers/homeController.js"></script>
 		<script src="/app/controllers/productController.js"></script>
+		<script src="/app/controllers/signupController.js"></script>
 
 	</body>
 </html>

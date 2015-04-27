@@ -1,7 +1,7 @@
-﻿app.controller('loginController', ['$scope', 'authenticationService', '$location', function ($scope, authenticationService, $location) {
+﻿app.controller('loginController', ['$scope', 'authenticationService', '$location', 'utilityService', function ($scope, authenticationService, $location, utilityService) {
 
 	$scope.loginDetail = {};
-	$scope.text = 'aaaaaa';
+	$scope.loginAlerts = [];
 
 	$scope.loginClick = function($event) {
 		$event.preventDefault();
@@ -14,11 +14,16 @@
 				$location.path('/product');
 			},
 			function(errorMessage) {
-				alert(errorMessage);
+				var alerts = utilityService.constructAlerts([errorMessage], 'danger');
+				utilityService.pushArray($scope.loginAlerts, alerts);
 			}
 		);
 
 
 	}
+
+	$scope.closeAlert = function (index) {
+		$scope.loginAlerts.splice(index, 1);
+	};
 
 }]);

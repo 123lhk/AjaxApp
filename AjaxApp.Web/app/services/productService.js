@@ -6,7 +6,7 @@
 		var deferred = $q.defer();
 		$http({
 			method: 'Get',
-			url: serviceBase + '/api/Values/1'
+			url: serviceBase + '/api/product/1'
 		}).success(function(response) {
 			deferred.resolve(response);
 		}).error(function (response) {
