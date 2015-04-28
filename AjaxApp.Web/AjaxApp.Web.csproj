@@ -127,6 +127,11 @@
     <Content Include="js\angular-local-storage\angular-local-storage.min.js" />
     <Content Include="js\angular-route\angular-route.js" />
     <Content Include="js\angular-route\angular-route.min.js" />
+    <Content Include="js\angular-ui-grid\ui-grid.css" />
+    <Content Include="js\angular-ui-grid\ui-grid.js" />
+    <Content Include="js\angular-ui-grid\ui-grid.min.css" />
+    <Content Include="js\angular-ui-grid\ui-grid.min.js" />
+    <Content Include="js\angular-ui-grid\ui-grid.svg" />
     <Content Include="js\angular\angular-csp.css" />
     <Content Include="js\angular\angular.js" />
     <Content Include="js\angular\angular.min.js" />
@@ -175,6 +180,12 @@
     <Content Include="js\angular-route\bower.json" />
     <Content Include="js\angular-route\package.json" />
     <Content Include="js\angular-route\README.md" />
+    <Content Include="js\angular-ui-grid\.bower.json" />
+    <Content Include="js\angular-ui-grid\bower.json" />
+    <Content Include="js\angular-ui-grid\README.md" />
+    <Content Include="js\angular-ui-grid\ui-grid.eot" />
+    <Content Include="js\angular-ui-grid\ui-grid.ttf" />
+    <Content Include="js\angular-ui-grid\ui-grid.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

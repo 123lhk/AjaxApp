@@ -8,35 +8,37 @@ using System.Web.Http.Cors;
 
 namespace AjaxApp.Api.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class ProductController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        // GET api/products
+		[HttpGet]
+		[Route("api/products/list")]
+		public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok<ProductListViewModel>(new ProductListViewModel());
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        // GET api/product/5
+		[HttpGet]
+		[Route("api/products/get/{id}")]
+        public IHttpActionResult Get(int id)
         {
-            return "You are authorised!";
+			 var model = new ProductListViewModel();
+
+			 if (id > model.Products.Count)
+	        {
+		        return BadRequest("Invalid Product Id");
+	        }
+
+
+			 return Ok(model.Products[id]);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+		
+			
+		//Push, Put, Deltet haven't been implemented
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
 
 		public class ProductListViewModel
 		{

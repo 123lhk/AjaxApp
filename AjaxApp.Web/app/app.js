@@ -1,4 +1,4 @@
-﻿var app = angular.module('ajaxApp', ['ngAnimate', 'ui.bootstrap', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+﻿var app = angular.module('ajaxApp', ['ngAnimate', 'ui.bootstrap', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.grid', 'ui.grid.selection']);
 
 app.config(function ($routeProvider, $locationProvider) {
 
