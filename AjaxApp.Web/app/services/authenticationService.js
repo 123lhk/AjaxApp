@@ -47,6 +47,9 @@
 		if (authData) {
 			authenticationStatus.isAuth = true;
 			authenticationStatus.userName = authData.userName;
+		} else {
+			authenticationStatus.isAuth = false;
+			authenticationStatus.userName = "";
 		}
 
 		return authenticationStatus;

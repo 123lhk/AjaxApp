@@ -7,4 +7,8 @@
 
 	$scope.authData = authenticationService.getAuthData();
 
+	$scope.SetCollapse = function () {
+		$scope.navCollapsed = true;
+	}
+
 }]);

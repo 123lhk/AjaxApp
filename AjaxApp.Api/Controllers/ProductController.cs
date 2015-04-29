@@ -61,7 +61,8 @@ namespace AjaxApp.Api.Controllers
 					Name = "Xbox One",
 					Price = 498,
 					Made = "Microsoft",
-					NoOfStock = 10
+					NoOfStock = 10,
+					ImageUrl = "/images/xbox_one.jpg"
 				});
 
 				Products.Add(new Product()
@@ -69,7 +70,8 @@ namespace AjaxApp.Api.Controllers
 					Name = "PlayStation 4 ",
 					Price = 598,
 					Made = "Sony",
-					NoOfStock = 20
+					NoOfStock = 20,
+					ImageUrl = "/images/ps4.jpg"
 				});
 
 				Products.Add(new Product()
@@ -77,7 +79,8 @@ namespace AjaxApp.Api.Controllers
 					Name = "3DS XL",
 					Price = 258,
 					Made = "Nitendo",
-					NoOfStock = 8
+					NoOfStock = 8,
+					ImageUrl = "/images/3dsxl.jpg"
 				});
 
 				Products.Add(new Product()
@@ -85,7 +88,8 @@ namespace AjaxApp.Api.Controllers
 					Name = "IPhone 6",
 					Price = 869,
 					Made = "Apple",
-					NoOfStock = 12
+					NoOfStock = 12,
+					ImageUrl = "/images/iphone6.jpg"
 				});
 
 				Products.Add(new Product()
@@ -93,7 +97,8 @@ namespace AjaxApp.Api.Controllers
 					Name = "Galaxy S6",
 					Price = 799,
 					Made = "Samsung",
-					NoOfStock = 14
+					NoOfStock = 14,
+					ImageUrl = "/images/galaxy_s6.jpg"
 				});
 			}
 		}
@@ -104,6 +109,8 @@ namespace AjaxApp.Api.Controllers
 			public decimal Price { get; set; }
 			public string Made { get; set; }
 			public int NoOfStock { get; set; }
+			//this is not a good way...but just a demo!!!
+			public string ImageUrl { get; set; }
 	    }
     }
 }

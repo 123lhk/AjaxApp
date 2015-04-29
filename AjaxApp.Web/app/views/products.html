@@ -3,12 +3,20 @@
 		&nbsp;
 	</div>
 	<div class="col-sm-12 col-md-8">
-		<div class="well well-lg">
-			<div class="table-responsive">
-				<div class="gridStyle" ui-grid-selection ui-grid="gridOptions"></div>
+
+		<div class="row" ng-repeat="row in products | groupBy:3">
+			<div class="col-md-4" ng-repeat="product in row">
+				<div class="thumbnail">
+					<img ng-src="{{product.ImageUrl}}" alt="{{product.Name}}">
+					<div class="caption">
+						<h4>{{product.Name}}</h4>
+						<h6>{{product.Made}}</h6>
+						<h6>{{product.Price | currency:"AUD $"}}</h6>
+					</div>
+				</div>
 			</div>
-			
-		</div>	
+		</div>
+
 	</div>
 
 	<div class="col-sm-0 col-md-2">

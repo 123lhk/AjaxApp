@@ -9,11 +9,11 @@
 }
 
 .alert.ng-enter {
-	 animation:fadeInDown 0.75s ease;
-	 -webkit-animation: fadeInDown 0.75s ease;
+	 animation:fadeInDown 0.4s ease;
+	 -webkit-animation: fadeInDown 0.4s ease;
 }
 
 .alert.ng-leave {
 	 animation:fadeOutUp 0.75s ease;
-	 -webkit-animation: fadeOutUp 0.75s ease;
+	 -webkit-animation: fadeOutUp 0.4s ease;
 }

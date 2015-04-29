@@ -1,4 +1,4 @@
-﻿app.service('requestInterceptor', ['$q', '$location', 'localStorageService', function($q, $location, localStorageService) {
+﻿app.service('requestInterceptor', ['$q', '$location', 'localStorageService',  function ($q, $location, localStorageService) {
 	this.request = function(config) {
 		if (!config.headers) {
 			config.headers = {};
@@ -15,6 +15,7 @@
 
 	this.responseError = function(rejection) {
 		if (rejection.status === 401) {
+			localStorageService.remove('authorizationData');
 			$location.path('/login');
 		}
 		return $q.reject(rejection);

@@ -28,7 +28,9 @@ module.exports = function (grunt) {
 					'angular-loading-bar/loading-bar.min.js': 'angular-loading-bar/build/loading-bar.min.js',
 					'angular-loading-bar/loading-bar.js': 'angular-loading-bar/build/loading-bar.js',
 					'angular-local-storage/angular-local-storage.js': 'angular-local-storage/dist/angular-local-storage.js',
-					'angular-local-storage/angular-local-storage.min.js': 'angular-local-storage/dist/angular-local-storage.min.js'
+					'angular-local-storage/angular-local-storage.min.js': 'angular-local-storage/dist/angular-local-storage.min.js',
+					'angular-filter/angular-filter.js': 'angular-filter/dist/angular-filter.js',
+					'angular-filter/angular-filter.min.js': 'angular-filter/dist/angular-filter.min.js'
 				}
 			},
 			css: {
