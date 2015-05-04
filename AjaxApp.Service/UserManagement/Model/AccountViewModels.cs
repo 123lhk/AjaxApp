@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace AjaxApp.Api.Models
+namespace AjaxApp.Service.UserManagement.Model
 {
     // Models returned by AccountController actions.
 
@@ -12,7 +12,7 @@ namespace AjaxApp.Api.Models
         public string Url { get; set; }
 
         public string State { get; set; }
-    }
+    }	
 
     public class ManageInfoViewModel
     {

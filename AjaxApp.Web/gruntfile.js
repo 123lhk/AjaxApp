@@ -42,19 +42,28 @@ module.exports = function (grunt) {
 					'angular-loading-bar/loading-bar.min.css': 'angular-loading-bar/build/loading-bar.min.css',
 					'angular-loading-bar/loading-bar.css': 'angular-loading-bar/build/loading-bar.css',
 					'animate.css/animate.css': 'animate.css/animate.css',
-					'animate.css/animate.min.css': 'animate.css/animate.min.css'
+					'animate.css/animate.min.css': 'animate.css/animate.min.css',
+					'font-awesome/.': 'font-awesome/css',
+					'bootstrap-social/bootstrap-scocial.css': 'bootstrap-social/bootstrap-social.css'
 				}
 			},
 			fonts: {
 				options: {
-					destPrefix: 'fonts'
+					destPrefix: 'css/fonts'
 				},
 				files: {
-					'bootstrap': 'bootstrap/dist/fonts'
-					
+					'.': 'font-awesome/fonts'
+				}
+			},
+			fonts2: {
+				options: {
+					destPrefix: 'css/fonts'
+				},
+				files: {
+					'.': 'bootstrap/dist/fonts',
 				}
 			}
-		},
+		}
 
 
 	});

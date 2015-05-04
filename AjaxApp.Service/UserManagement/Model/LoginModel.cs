@@ -13,6 +13,7 @@ namespace AjaxApp.Service.UserManagement.Model
 		public string LoginProvider { get; set; }
 		public string ProviderKey { get; set; }
 		public string UserName { get; set; }
+		public string ExternalAccessToken { get; set; }
 
 		public IList<Claim> GetClaims()
 		{
@@ -51,7 +52,8 @@ namespace AjaxApp.Service.UserManagement.Model
 			{
 				LoginProvider = providerKeyClaim.Issuer,
 				ProviderKey = providerKeyClaim.Value,
-				UserName = identity.FindFirstValue(ClaimTypes.Name)
+				UserName = identity.FindFirstValue(ClaimTypes.Email),
+				ExternalAccessToken = identity.FindFirstValue("ExternalAccessToken")
 			};
 		}
 	}

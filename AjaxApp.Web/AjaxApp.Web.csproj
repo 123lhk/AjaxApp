@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\navController.js" />
@@ -100,19 +101,25 @@
     <Content Include="app\services\productService.js" />
     <Content Include="app\services\requestInterceptor.js" />
     <Content Include="app\services\utilityService.js" />
+    <Content Include="app\views\associate.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\products.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="authComplete.html" />
     <Content Include="css\angular-loading-bar\loading-bar.css" />
     <Content Include="css\angular-loading-bar\loading-bar.min.css" />
     <Content Include="css\animate.css\animate.css" />
     <Content Include="css\animate.css\animate.min.css" />
+    <Content Include="css\bootstrap-social\bootstrap-scocial.css" />
     <Content Include="css\bootswatch\bootstrap.css" />
     <Content Include="css\bootswatch\bootstrap.min.css" />
     <Content Include="css\bootswatch\thumbnail.png" />
+    <Content Include="css\font-awesome\font-awesome.css" />
+    <Content Include="css\font-awesome\font-awesome.min.css" />
+    <Content Include="css\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="css\myStyle\style.css" />
-    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="gruntfile.js" />
     <Content Include="images\3dsxl.jpg" />
@@ -145,6 +152,7 @@
     <Content Include="js\jquery\jquery.js" />
     <Content Include="js\jquery\jquery.min.js" />
     <Content Include="index.html" />
+    <Content Include="js\myscripts\authComplete.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -164,10 +172,6 @@
     <Content Include="css\bootswatch\variables.less" />
     <Content Include="css\bootswatch\_bootswatch.scss" />
     <Content Include="css\bootswatch\_variables.scss" />
-    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.eot" />
-    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff2" />
     <Content Include="js\angular-bootstrap\.bower.json" />
     <Content Include="js\angular-bootstrap\bower.json" />
     <Content Include="js\angular\.bower.json" />
@@ -193,6 +197,16 @@
     <Content Include="js\angular-ui-grid\ui-grid.eot" />
     <Content Include="js\angular-ui-grid\ui-grid.ttf" />
     <Content Include="js\angular-ui-grid\ui-grid.woff" />
+    <Content Include="css\font-awesome\font-awesome.css.map" />
+    <Content Include="css\fonts\fontawesome-webfont.eot" />
+    <Content Include="css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="css\fonts\fontawesome-webfont.woff" />
+    <Content Include="css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="css\fonts\FontAwesome.otf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

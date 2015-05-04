@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
-using AjaxApp.Api.Models;
 using AjaxApp.DataAccess.Model.UserManagement;
 using AjaxApp.Service.Common;
 using AjaxApp.Service.UserManagement.Helpers;
@@ -17,6 +16,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 
@@ -48,6 +48,11 @@ namespace AjaxApp.Service.UserManagement.Implementations
 		public UserDetail GetUserById(string userId)
 		{
 			return userMapper.MapToDetail(applicationUserManager.FindById(userId));
+		}
+
+		public UserDetail  GetUserByLoginInfo(UserLoginInfo loginInfo)
+		{
+			return userMapper.MapToDetail(applicationUserManager.Find(loginInfo));
 		}
 
 		public ErrorCollection UpdateUser(UserDetail detail)
@@ -179,42 +184,38 @@ namespace AjaxApp.Service.UserManagement.Implementations
 			return rv;
 		}
 
-		public void GetExternalLogin(string loginProvider, string providerKey, ExternalLoginData externalLogin)
+		public bool IsExternalLoginUserRegistered(string loginProvider, string providerKey, ExternalLoginData externalLogin)
 		{
 			var user = applicationUserManager.Find(new UserLoginInfo(loginProvider, providerKey));
 
-			bool hasRegistered = user != null;
-
-			if (hasRegistered)
-			{
-				authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-
-				ClaimsIdentity oAuthIdentity = user.GenerateUserIdentity(applicationUserManager, OAuthDefaults.AuthenticationType);
-				ClaimsIdentity cookieIdentity = user.GenerateUserIdentity(applicationUserManager, CookieAuthenticationDefaults.AuthenticationType);
-				var properties = CreateProperties(user.UserName);
-				authenticationManager.SignIn(properties, oAuthIdentity, cookieIdentity);
-			}
-			else
-			{
-				IEnumerable<Claim> claims = externalLogin.GetClaims();
-				ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
-				authenticationManager.SignIn(identity);
-			}
+			return user != null;
 		}
 
-		public ErrorCollection RegisterExternal(UserDetail detail)
+		public ErrorCollection RegisterExternal(UserDetail detail, string provider)
 		{
 			var rv = new ErrorCollection();
-			var info =  authenticationManager.GetExternalLoginInfo();
-			if (info == null)
+
+			var user = applicationUserManager.Find(new UserLoginInfo(provider, detail.UserName));
+
+			if (user != null)
 			{
-				rv.Errors.Add("Internal Errors");
+				rv.Errors.Add("this user has been registered already.");
 				return rv;
 			}
 
-			var user = new ApplicationUser() { UserName = detail.Email, Email = detail.Email };
+			user = new ApplicationUser() { UserName = detail.Email, Email = detail.Email };
 
 			AddFromIdentityResult(applicationUserManager.Create(user), rv);
+
+			if (rv.HasError)
+				return rv;
+
+			var info = new ExternalLoginInfo()
+			{
+				DefaultUserName = user.UserName,
+				Login = new UserLoginInfo(provider, user.UserName)
+			};
+
 			AddFromIdentityResult(applicationUserManager.AddLogin(user.Id, info.Login), rv);
 
 			return rv;

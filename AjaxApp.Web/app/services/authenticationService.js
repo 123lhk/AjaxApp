@@ -1,10 +1,18 @@
 ﻿app.service('authenticationService', ['$http', '$q', 'localStorageService','serviceSetting', function ($http, $q, localStorageService, serviceSetting) {
 	var serviceBase = serviceSetting.apiServiceBaseUri;
+	var that = this;
 
 	var authenticationStatus = {
 		isAuth: false,
 		userName: ''
 	}
+	this.authenticationStatus = authenticationStatus;
+	var externalAuthData = {
+		provider: "",
+		userName: "",
+		externalAccessToken: ""
+	};
+	this.externalAuthData = externalAuthData;
 
 	this.login = function (loginDetail) {
 
@@ -84,5 +92,51 @@
 		return deferred.promise;
 	}
 
+	this.obtainAccessToken = function (externalData) {
+
+		var deferred = $q.defer();
+
+		$http.get(serviceBase + '/api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).success(function (response) {
+
+			localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
+
+			authenticationStatus.isAuth = true;
+			authenticationStatus.userName = response.userName;
+
+			deferred.resolve(response);
+
+		}).error(function (err, status) {
+			that.logOut();
+			if (!angular.isObject(response) || !response.ModelState) {
+				deferred.reject("Login Failed!");
+			} else {
+				deferred.reject(response.ModelState);
+			}
+		});
+
+		return deferred.promise;
+
+	};
+
+	this.registerExternal = function (registerExternalData) {
+
+		var deferred = $q.defer();
+
+		$http.post(serviceBase + '/api/account/registerexternal', registerExternalData).success(function (response) {
+
+			localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
+
+			authenticationStatus.isAuth = true;
+			authenticationStatus.userName = response.userName;
+
+			deferred.resolve(response);
+
+		}).error(function (err, status) {
+			that.logOut();
+			deferred.reject(err.ModelState);
+		});
+
+		return deferred.promise;
+	};
 
 }]);

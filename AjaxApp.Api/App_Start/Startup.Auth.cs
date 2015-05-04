@@ -9,7 +9,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using AjaxApp.Api.Models;
 using AjaxApp.Api.Providers;
 using AjaxApp.Service.UserManagement.Helpers;
 using AjaxApp.Service.UserManagement.Implementations;
@@ -20,6 +19,7 @@ namespace AjaxApp.Api
     public partial class Startup
     {
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+		public static GoogleOAuth2AuthenticationOptions GoogleAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
 
@@ -44,7 +44,7 @@ namespace AjaxApp.Api
             {
                 TokenEndpointPath = new PathString("/Token"),
 				Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+               // AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
                 AllowInsecureHttp = true
             };
@@ -65,11 +65,13 @@ namespace AjaxApp.Api
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+			GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+			{
+				ClientId = "1012613027075-3tjhb14tvvqb30l5dgr8vhna8qs7cd7m.apps.googleusercontent.com",
+				ClientSecret = "YGoEAEkeLMhUCzj8jxDMmwNB",
+				Provider = new GoogleAuthProvider()
+			};
+			app.UseGoogleAuthentication(GoogleAuthOptions);          
         }
     }
 }

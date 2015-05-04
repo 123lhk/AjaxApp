@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AjaxApp.Api.Models;
 using AjaxApp.Api.Results;
 using AjaxApp.Service.Common;
 using AjaxApp.Service.UserManagement.Interfaces;
 using AjaxApp.Service.UserManagement.Model;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Linq;
 
 namespace AjaxApp.Api.Controllers
 {
@@ -167,17 +171,26 @@ namespace AjaxApp.Api.Controllers
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
         [Route("ExternalLogin", Name = "ExternalLogin")]
-        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+        public IHttpActionResult GetExternalLogin(string provider, string error = null)
         {
+			string redirectUri = string.Empty;
+
             if (error != null)
             {
-                return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
+                return BadRequest(Uri.EscapeDataString(error));
             }
 
             if (!User.Identity.IsAuthenticated)
             {
                 return new ChallengeResult(provider, this);
             }
+
+			var redirectUriValidationResult = ValidateClientAndRedirectUri(this.Request, ref redirectUri);
+
+			if (!string.IsNullOrWhiteSpace(redirectUriValidationResult))
+			{
+				return BadRequest(redirectUriValidationResult);
+			}
 
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
@@ -192,9 +205,17 @@ namespace AjaxApp.Api.Controllers
                 return new ChallengeResult(provider, this);
             }
 	    
-	        userManagementService.GetExternalLogin(externalLogin.LoginProvider, externalLogin.ProviderKey, externalLogin);
+	        bool hasRegistered = userManagementService.IsExternalLoginUserRegistered(externalLogin.LoginProvider, externalLogin.ProviderKey, externalLogin);
+			
+			redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
+													   redirectUri,
+													   externalLogin.ExternalAccessToken,
+													   externalLogin.LoginProvider,
+													   hasRegistered.ToString(),
+													   externalLogin.UserName);
 
-            return Ok();
+			return Redirect(redirectUri);
+ 
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
@@ -232,22 +253,65 @@ namespace AjaxApp.Api.Controllers
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
-        public  IHttpActionResult RegisterExternal(RegisterExternalBindingModel model)
+		[AllowAnonymous]
+        public  async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+			var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
+			if (verifiedAccessToken == null)
+			{
+				return BadRequest("Invalid Provider or External Access Token");
+			}
+ 
+
             var detail = new UserDetail(){ UserName = model.Email, Email = model.Email };
  
-            var result = userManagementService.RegisterExternal(detail);
+            var result = userManagementService.RegisterExternal(detail, model.Provider);
             if (result.HasError)
             {
                 return GetErrorResult(result); 
             }
-            return Ok();
+
+	        var accessTokenReponse = GenerateLocalAccessTokenResponse(model.Email);
+            return Ok(accessTokenReponse);
         }
+
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("ObtainLocalAccessToken")]
+		public async Task<IHttpActionResult>  ObtainLocalAccessToken(string provider, string externalAccessToken)
+		{
+
+			if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
+			{
+				return BadRequest("Provider or external access token is not sent");
+			}
+
+			var verifiedAccessToken =  await VerifyExternalAccessToken(provider, externalAccessToken);
+			if (verifiedAccessToken == null)
+			{
+				return BadRequest("Invalid Provider or External Access Token");
+			}
+
+			var user =  userManagementService.GetUserByLoginInfo(new UserLoginInfo(provider, verifiedAccessToken.user_id));
+
+			bool hasRegistered = user != null;
+
+			if (!hasRegistered)
+			{
+				return BadRequest("External user is not registered");
+			}
+
+			//generate access token response
+			var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
+
+			return Ok(accessTokenResponse);
+
+		}
 
        
         #region Helpers
@@ -281,11 +345,137 @@ namespace AjaxApp.Api.Controllers
 
             return null;
         }
-
-       
-
-        
-
         #endregion
-    }
+
+		private string ValidateClientAndRedirectUri(HttpRequestMessage request, ref string redirectUriOutput)
+		{
+
+			Uri redirectUri;
+
+			var redirectUriString = GetQueryString(Request, "redirect_uri");
+
+			if (string.IsNullOrWhiteSpace(redirectUriString))
+			{
+				return "redirect_uri is required";
+			}
+
+			bool validUri = Uri.TryCreate(redirectUriString, UriKind.Absolute, out redirectUri);
+
+			if (!validUri)
+			{
+				return "redirect_uri is invalid";
+			}
+
+			var responseType = GetQueryString(Request, "responseType");
+
+			if (string.IsNullOrWhiteSpace(responseType))
+			{
+				return "responseType is required";
+			}
+
+			if (responseType != "token")
+			{
+				return "Only token authentication type is supported";
+			}
+
+			redirectUriOutput = redirectUri.AbsoluteUri;
+
+			return string.Empty;
+
+		}
+
+		private string GetQueryString(HttpRequestMessage request, string key)
+		{
+			var queryStrings = request.GetQueryNameValuePairs();
+
+			if (queryStrings == null) return null;
+
+			var match = queryStrings.FirstOrDefault(keyValue => string.Compare(keyValue.Key, key, true) == 0);
+
+			if (string.IsNullOrEmpty(match.Value)) return null;
+
+			return match.Value;
+		}
+
+		private JObject GenerateLocalAccessTokenResponse(string userName)
+		{
+			var tokenExpiration = Startup.OAuthOptions.AccessTokenExpireTimeSpan;
+
+			ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+
+			identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+			identity.AddClaim(new Claim("role", "user"));
+
+			var props = new AuthenticationProperties()
+			{
+				IssuedUtc = DateTime.UtcNow,
+				ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+			};
+
+			var ticket = new AuthenticationTicket(identity, props);
+
+			var accessToken = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
+
+			JObject tokenResponse = new JObject(
+										new JProperty("userName", userName),
+										new JProperty("access_token", accessToken),
+										new JProperty("token_type", "bearer"),
+										new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
+										new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
+										new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
+			);
+
+			return tokenResponse;
+		}
+
+
+		private async Task<ParsedExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
+		{
+			ParsedExternalAccessToken parsedToken = null;
+
+			var verifyTokenEndPoint = "";
+
+			if (provider == "Google")
+			{
+				verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
+			}
+			else
+			{
+				return null;
+			}
+
+			var client = new HttpClient();
+			var uri = new Uri(verifyTokenEndPoint);
+			var response = await client.GetAsync(uri);
+
+			if (response.IsSuccessStatusCode)
+			{
+				var content = await response.Content.ReadAsStringAsync();
+
+				dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+
+				parsedToken = new ParsedExternalAccessToken();
+
+				if (provider == "Google")
+				{
+					parsedToken.user_id = jObj["user_id"];
+					parsedToken.app_id = jObj["audience"];
+
+					if (!string.Equals(Startup.GoogleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+					{
+						return null;
+					}
+
+				}
+				else
+				{
+					throw new NotImplementedException();
+				}
+
+
+			}
+
+			return parsedToken;
+		}
+	}
 }
