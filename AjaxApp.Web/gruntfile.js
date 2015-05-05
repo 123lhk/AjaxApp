@@ -24,6 +24,7 @@ module.exports = function (grunt) {
 					'angular-animate': 'angular-animate',
 					'angular-bootstrap': 'angular-bootstrap',
 					'angular-ui-grid': 'angular-ui-grid',
+					'angular-cookies': 'angular-cookies',
 					'jquery': 'jquery/dist',
 					'angular-loading-bar/loading-bar.min.js': 'angular-loading-bar/build/loading-bar.min.js',
 					'angular-loading-bar/loading-bar.js': 'angular-loading-bar/build/loading-bar.js',

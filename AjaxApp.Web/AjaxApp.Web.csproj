@@ -133,6 +133,8 @@
     <Content Include="js\angular-bootstrap\ui-bootstrap-tpls.min.js" />
     <Content Include="js\angular-bootstrap\ui-bootstrap.js" />
     <Content Include="js\angular-bootstrap\ui-bootstrap.min.js" />
+    <Content Include="js\angular-cookies\angular-cookies.js" />
+    <Content Include="js\angular-cookies\angular-cookies.min.js" />
     <Content Include="js\angular-filter\angular-filter.js" />
     <Content Include="js\angular-filter\angular-filter.min.js" />
     <Content Include="js\angular-loading-bar\loading-bar.js" />
@@ -207,6 +209,11 @@
     <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="css\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="js\angular-cookies\.bower.json" />
+    <Content Include="js\angular-cookies\angular-cookies.min.js.map" />
+    <Content Include="js\angular-cookies\bower.json" />
+    <Content Include="js\angular-cookies\package.json" />
+    <Content Include="js\angular-cookies\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

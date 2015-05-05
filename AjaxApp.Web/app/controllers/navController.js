@@ -1,8 +1,9 @@
-﻿app.controller('navController', ['$scope', '$location', 'authenticationService', function ($scope, $location, authenticationService) {
+﻿app.controller('navController', ['$scope', '$location', 'authenticationService', '$cookies', function ($scope, $location, authenticationService) {
 
 	$scope.logOutClick = function() {
 		authenticationService.logOut();
 		$location.path('/home');
+
 	}
 
 	$scope.authData = authenticationService.getAuthData();

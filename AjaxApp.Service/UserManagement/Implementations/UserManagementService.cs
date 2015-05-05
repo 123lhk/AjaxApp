@@ -94,47 +94,6 @@ namespace AjaxApp.Service.UserManagement.Implementations
 			authenticationManager.SignOut(CookieAuthenticationDefaults.AuthenticationType);
 		}
 
-		//TODO: need to decouple further
-		public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string redirectUri, string publicClientId, UrlHelper urlHelper, bool generateState = false)
-		{
-			IEnumerable<AuthenticationDescription> descriptions = authenticationManager.GetExternalAuthenticationTypes();
-			List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
-
-			string state;
-
-			if (generateState)
-			{
-				const int strengthInBits = 256;
-				state = RandomOAuthStateGenerator.Generate(strengthInBits);
-			}
-			else
-			{
-				state = null;
-			}
-
-			foreach (AuthenticationDescription description in descriptions)
-			{
-
-				ExternalLoginViewModel login = new ExternalLoginViewModel
-				{
-					Name = description.Caption,
-					
-					Url = urlHelper.Route("ExternalLogin", new
-					{
-						provider = description.AuthenticationType,
-						response_type = "token",
-						client_id = publicClientId,
-						redirect_uri = redirectUri,
-						state = state
-					}),
-					State = state
-				};
-				logins.Add(login);
-			}
-
-			return logins;
-		}
-
 		public ErrorCollection ChangePassword(string userId, string oldPassword, string newPassword)
 		{
 			var rv = new ErrorCollection();
@@ -249,45 +208,6 @@ namespace AjaxApp.Service.UserManagement.Implementations
                 { "userName", userName }
             };
 			return new AuthenticationProperties(data);
-		}
-
-		//TODO: need to decouple further
-		public ManageInfoViewModel GetManageInfo(string userId, string localLoginProvider, string redirectUri, string publicClientId, UrlHelper urlHelper, bool generateState = false)
-		{
-			IdentityUser user = applicationUserManager.FindById(userId);
-
-			if (user == null)
-			{
-				return null;
-			}
-
-			List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
-
-			foreach (IdentityUserLogin linkedAccount in user.Logins)
-			{
-				logins.Add(new UserLoginInfoViewModel
-				{
-					LoginProvider = linkedAccount.LoginProvider,
-					ProviderKey = linkedAccount.ProviderKey
-				});
-			}
-
-			if (user.PasswordHash != null)
-			{
-				logins.Add(new UserLoginInfoViewModel
-				{
-					LoginProvider = localLoginProvider,
-					ProviderKey = user.UserName,
-				});
-			}
-
-			return new ManageInfoViewModel
-			{
-				LocalLoginProvider = localLoginProvider,
-				Email = user.UserName,
-				Logins = logins,
-				ExternalLoginProviders = GetExternalLogins(redirectUri, publicClientId, urlHelper, generateState)
-			};
 		}
 
 		private static class RandomOAuthStateGenerator

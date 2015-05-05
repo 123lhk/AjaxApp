@@ -18,8 +18,6 @@ namespace AjaxApp.Service.UserManagement.Interfaces
 		ErrorCollection CreateUser(UserDetail detail, string password);
 
 		void SignOut(string authenticationType);
-		ManageInfoViewModel GetManageInfo(string userId, string localLoginProvider, string redirectUri, string publicClientId, UrlHelper urlHelper, bool generateState = false);
-		IEnumerable<ExternalLoginViewModel> GetExternalLogins(string redirectUri, string publicClientId, UrlHelper urlHelper, bool generateState = false);
 
 		ErrorCollection ChangePassword(string userId, string oldPassword, string newPassword);
 		ErrorCollection SetPassword(string userId, string newPassword);

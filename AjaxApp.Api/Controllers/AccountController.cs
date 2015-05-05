@@ -31,73 +31,13 @@ namespace AjaxApp.Api.Controllers
 		}
 
 
-        // GET api/Account/UserInfo
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
-        {
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-            return new UserInfoViewModel
-            {
-                Email = User.Identity.GetUserName(),
-                HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
-            };
-        }
+       
 
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
             userManagementService.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
-        }
-
-        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-        [Route("ManageInfo")]
-        public ManageInfoViewModel GetManageInfo(string returnUrl, bool generateState = false)
-        {
-	        return userManagementService.GetManageInfo(User.Identity.GetUserId(), LocalLoginProvider,
-		        new Uri(Request.RequestUri, returnUrl).AbsoluteUri,
-		        Startup.PublicClientId, Url, generateState);
-        }
-
-        // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
-        public IHttpActionResult ChangePassword(ChangePasswordBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-	        var result = userManagementService.ChangePassword(User.Identity.GetUserId(), model.OldPassword,
-		        model.NewPassword);
-            
-            if (result.HasError)
-            {
-                return GetErrorResult(result);
-            }
-            return Ok();
-        }
-
-        // POST api/Account/SetPassword
-        [Route("SetPassword")]
-        public  IHttpActionResult SetPassword(SetPasswordBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-	        var result = userManagementService.SetPassword(User.Identity.GetUserId(), model.NewPassword); 
-
-            if (result.HasError)
-            {
-                return GetErrorResult(result);
-            }
-
             return Ok();
         }
 
@@ -129,34 +69,6 @@ namespace AjaxApp.Api.Controllers
             }
 
             var result = userManagementService.AddLogin(User.Identity.GetUserId(), externalData.LoginProvider, externalData.ProviderKey);
-
-            if (result.HasError)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
-        }
-
-        // POST api/Account/RemoveLogin
-        [Route("RemoveLogin")]
-        public IHttpActionResult RemoveLogin(RemoveLoginBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-	        ErrorCollection result = null;
-
-            if (model.LoginProvider == LocalLoginProvider)
-            {
-                result = userManagementService.RemovePassword(User.Identity.GetUserId());
-            }
-            else
-            {
-                result = userManagementService.RemoveLogin(User.Identity.GetUserId(), model.LoginProvider, model.ProviderKey);
-            }
 
             if (result.HasError)
             {
@@ -205,7 +117,7 @@ namespace AjaxApp.Api.Controllers
                 return new ChallengeResult(provider, this);
             }
 	    
-	        bool hasRegistered = userManagementService.IsExternalLoginUserRegistered(externalLogin.LoginProvider, externalLogin.ProviderKey, externalLogin);
+	        bool hasRegistered = userManagementService.IsExternalLoginUserRegistered(externalLogin.LoginProvider, externalLogin.UserName, externalLogin);
 			
 			redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
 													   redirectUri,
@@ -216,15 +128,6 @@ namespace AjaxApp.Api.Controllers
 
 			return Redirect(redirectUri);
  
-        }
-
-        // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
-        [AllowAnonymous]
-        [Route("ExternalLogins")]
-        public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
-        {
-	        return userManagementService.GetExternalLogins(new Uri(Request.RequestUri, returnUrl).AbsoluteUri,
-		        Startup.PublicClientId, Url, generateState);
         }
 
         // POST api/Account/Register
@@ -458,7 +361,7 @@ namespace AjaxApp.Api.Controllers
 
 				if (provider == "Google")
 				{
-					parsedToken.user_id = jObj["user_id"];
+					parsedToken.user_id = jObj["email"];
 					parsedToken.app_id = jObj["audience"];
 
 					if (!string.Equals(Startup.GoogleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
