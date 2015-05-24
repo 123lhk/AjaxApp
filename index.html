@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>Angular App</title>
+	<link href="css/bootswatch/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/angular-loading-bar/loading-bar.min.css" rel="stylesheet"/>
+	<link href="css/animate.css/animate.min.css" rel="stylesheet"/>
+	<link href="css/myStyle/style.css" rel="stylesheet"/>
+	<link href="js/angular-ui-grid/ui-grid.min.css" rel="stylesheet"/>
+	<link href="css/font-awesome/font-awesome.min.css" rel="stylesheet"/>
+	<link href="css/bootstrap-social/bootstrap-scocial.css" rel="stylesheet"/>
+	
+</head>
+	<body ng-app="ajaxApp">
+
+		<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="navController">
+			<div class="container">
+				<div class="navbar-header">
+					<button ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="navbar-toggle">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#home" class="navbar-brand">AjaxApp</a>
+				</div>
+				<div class="navbar-collapse bs-js-navbar-collapse" collapse="navCollapsed">
+					<ul class="nav navbar-nav">
+						<li><a href="#about" ng-click="SetCollapse()">About</a></li>
+						<li><a href="#Contact" ng-click="SetCollapse()">Contact</a></li>
+						<li data-ng-hide="!authData.isAuth" ><a href="#/product" ng-click="SetCollapse()">Products</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li data-ng-hide="!authData.isAuth"><a href="#/home" ng-click="SetCollapse()">Hi, {{authData.userName}}</a></li>
+						<li data-ng-hide="!authData.isAuth"><a href="" ng-click="logOutClick(); SetCollapse();">Logout</a></li>
+						<li data-ng-hide="authData.isAuth"> <a href="#/login" ng-click="SetCollapse()">Login</a></li>
+						<li data-ng-hide="authData.isAuth"> <a href="#/signup" ng-click="SetCollapse()">Sign Up</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="myView" ng-view>
+			</div>
+		</div>
+
+		<!--Library Scripts-->
+		<script src="js/jquery/jquery.min.js"></script>
+		<script src="js/angular/angular.min.js"></script>
+		<script src="js/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script src="js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="js/angular-route/angular-route.min.js"></script>
+		<script src="js/angular-animate/angular-animate.min.js"></script>
+		<script src="js/angular-loading-bar/loading-bar.min.js"></script>
+		<script src="js/angular-local-storage/angular-local-storage.min.js"></script>
+		<script src="js/angular-ui-grid/ui-grid.min.js"></script>
+		<script src="js/angular-filter/angular-filter.min.js"></script>
+		<script src="js/angular-cookies/angular-cookies.min.js"></script>
+
+		<!--App script-->
+		<script src="app/optimized.js"></script>
+
+	</body>
+</html>
