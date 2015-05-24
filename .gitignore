@@ -21,3 +21,5 @@
 /AjaxApp.Web/node_modules
 /AjaxApp.Web/lib
 /.npmignore
+/AjaxApp.Web/.tmp
+/AjaxApp.Web/dist
