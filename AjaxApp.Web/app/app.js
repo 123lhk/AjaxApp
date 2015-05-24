@@ -1,6 +1,6 @@
 ﻿var app = angular.module('ajaxApp', ['ngAnimate', 'ui.bootstrap', 'ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.grid', 'ui.grid.selection', 'angular.filter', 'ngCookies']);
 
-app.config(function ($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
 	$routeProvider.when("/product", {
 		controller: 'productController',
@@ -30,16 +30,16 @@ app.config(function ($routeProvider, $locationProvider) {
 	$routeProvider.otherwise({ redirectTo: "/home" });
 
 	//$locationProvider.html5Mode(true);
-});
+}]);
 
 //change this
 app.constant('serviceSetting', {
 	apiServiceBaseUri: 'http://localhost:59400'
 });
 
-app.config(function ($httpProvider) {
+app.config(['$httpProvider',function ($httpProvider) {
 	$httpProvider.interceptors.push('requestInterceptor');
-});
+}]);
 
 app.run(['authenticationService', function (authenticationService) {
 	authenticationService.getAuthData();
