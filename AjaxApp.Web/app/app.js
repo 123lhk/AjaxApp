@@ -4,27 +4,27 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 	$routeProvider.when("/product", {
 		controller: 'productController',
-		templateUrl: "/app/views/products.html"
+		templateUrl: "app/views/products.html"
 	});
 
 	$routeProvider.when("/login", {
 		controller: 'loginController',
-		templateUrl: "/app/views/login.html"
+		templateUrl: "app/views/login.html"
 	});
 
 	$routeProvider.when("/signup", {
 		controller: 'signupController',
-		templateUrl: "/app/views/signup.html"
+		templateUrl: "app/views/signup.html"
 	});
 
 	$routeProvider.when("/home", {
 		controller: 'loginController',
-		templateUrl: "/app/views/home.html"
+		templateUrl: "app/views/home.html"
 	});
 
 	$routeProvider.when("/associate", {
 		controller: "associateController",
-		templateUrl: "/app/views/associate.html"
+		templateUrl: "app/views/associate.html"
 	});
 	
 	$routeProvider.otherwise({ redirectTo: "/home" });
